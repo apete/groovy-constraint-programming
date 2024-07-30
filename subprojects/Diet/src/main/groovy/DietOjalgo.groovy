@@ -18,15 +18,12 @@ import org.ojalgo.optimisation.ExpressionsBasedModel
 
 def model = new ExpressionsBasedModel()
 
-def bread = model.addVariable("Bread").lower(0)
-def milk = model.addVariable("Milk").lower(0).upper(1)
-def cheese = model.addVariable("Cheese").lower(0)
-def potato = model.addVariable("Potato").lower(0)
-def fish = model.addVariable("Fish").lower(0.5)
-def yogurt = model.addVariable("Yogurt").lower(0)
-
-def cost = model.addExpression("Cost")
-cost.set(bread, 2.0).set(milk, 3.5).set(cheese, 8.0).set(potato, 1.5).set(fish, 11.0).set(yogurt, 1.0)
+def bread = model.addVariable("Bread").weight(2.0).lower(0)
+def milk = model.addVariable("Milk").weight(3.5).lower(0).upper(1)
+def cheese = model.addVariable("Cheese").weight(8.0).lower(0)
+def potato = model.addVariable("Potato").weight(1.5).lower(0)
+def fish = model.addVariable("Fish").weight(11.0).lower(0.5)
+def yogurt = model.addVariable("Yogurt").weight(1.0).lower(0)
 
 def protein = model.addExpression("Protein").upper(10)
 protein.set(bread, 4.0).set(milk, 8.0).set(cheese, 7.0).set(potato, 1.3).set(fish, 8.0).set(yogurt, 9.2)
@@ -40,7 +37,6 @@ carbs.set(bread, 15.0).set(milk, 11.7).set(cheese, 0.4).set(potato, 22.6).set(fi
 def calories = model.addExpression("Calories").lower(300)
 calories.set(bread, 90).set(milk, 120).set(cheese, 106).set(potato, 97).set(fish, 130).set(yogurt, 180)
 
-cost.weight(1.0)
 def result = model.minimise()
 
 println result
